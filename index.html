@@ -68,22 +68,23 @@
             </p>
         </div>
 
-        <!-- Check if it's a weekend -->
+        <!-- Display day buttons every day -->
+        <div class="day-buttons">
+            <?php foreach ($days as $day): ?>
+                <form method="POST" action="schedule.php">
+                    <input type="hidden" name="selected_day" value="<?php echo $day; ?>">
+                    <button type="submit"><?php echo $day; ?></button>
+                </form>
+            <?php endforeach; ?>
+        </div>
+
+        <!-- Weekend message -->
         <?php if ($currentDay === 'الجمعة' || $currentDay === 'السبت'): ?>
             <div class="no-lectures">
                 لا توجد محاضرات خلال عطلة نهاية الأسبوع.
             </div>
-            <div class="day-buttons">
-                <?php foreach ($days as $day): ?>
-                    <?php if ($day !== 'الجمعة' && $day !== 'السبت'): ?>
-                        <form method="POST" action="schedule.php">
-                            <input type="hidden" name="selected_day" value="<?php echo $day; ?>">
-                            <button type="submit"><?php echo $day; ?></button>
-                        </form>
-                    <?php endif; ?>
-                <?php endforeach; ?>
-            </div>
         <?php else: ?>
+            <!-- Display schedule on workdays -->
             <div class="schedule">
                 <?php if (!empty($todaySchedule)): ?>
                     <?php foreach ($todaySchedule as $lecture): ?>
