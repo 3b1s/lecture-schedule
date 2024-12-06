@@ -33,3 +33,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['selected_day'])) {
 // Get the selected day's schedule
 $todaySchedule = $schedule[$selectedDay] ?? [];
 $currentDay = $selectedDay;
+?>
+
