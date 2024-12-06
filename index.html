@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html dir="rtl" lang="ar">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>جدول المحاضرات - علوم حاسوب</title>
+    <title>جدول المحاضرات - علوم سياسية</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -11,7 +11,7 @@
             min-height: 100vh;
             padding: 20px;
         }
-
+        
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -20,7 +20,7 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             overflow: hidden;
         }
-
+        
         .header {
             background: linear-gradient(to right, #4299e1, #3182ce);
             color: white;
@@ -28,10 +28,10 @@
             text-align: center;
         }
 
-            .header h1 {
-                margin: 0;
-                font-size: 24px;
-            }
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
 
         .tabs {
             background: #f7fafc;
@@ -41,22 +41,22 @@
             gap: 10px;
         }
 
-            .tabs button {
-                padding: 10px 20px;
-                border: none;
-                border-radius: 4px;
-                cursor: pointer;
-                transition: background 0.3s;
-            }
+        .tabs button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
 
-                .tabs button.active {
-                    background: #4299e1;
-                    color: white;
-                }
+        .tabs button.active {
+            background: #4299e1;
+            color: white;
+        }
 
-                .tabs button:hover:not(.active) {
-                    background: #e2e8f0;
-                }
+        .tabs button:hover:not(.active) {
+            background: #e2e8f0;
+        }
 
         .content {
             padding: 20px;
@@ -71,9 +71,9 @@
             transition: box-shadow 0.3s;
         }
 
-            .lecture-card:hover {
-                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            }
+        .lecture-card:hover {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
 
         .lecture-header {
             display: flex;
@@ -93,7 +93,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>جدول المحاضرات - علوم حاسوب</h1>
+            <h1>جدول المحاضرات - علوم سياسية</h1>
         </div>
 
         <div class="tabs" id="days-tabs">
@@ -139,4 +139,30 @@
             ]
         };
 
-        const
+        const days = Object.keys(schedule);
+        let activeDay = days[0];
+
+        function updateSchedule() {
+            const container = document.getElementById('schedule-content');
+            container.innerHTML = '';
+
+            if (schedule[activeDay]) {
+                schedule[activeDay].forEach(lecture => {
+                    const lectureCard = document.createElement('div');
+                    lectureCard.className = 'lecture-card';
+                    lectureCard.innerHTML = `
+                        <div class="lecture-header">
+                            <div>${lecture.name}</div>
+                            <div>${lecture.time}</div>
+                        </div>
+                        <div class="lecture-details">
+                            <div>المحاضر: ${lecture.lecturer}</div>
+                            <div>الموقع: ${lecture.location}</div>
+                        </div>
+                    `;
+                    container.appendChild(lectureCard);
+                });
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded[_{{{CITATION{{{_1{](https://github.com/Ab-0/List-Banned-Members/tree/b8d0e78891edc5488dfecdb19e4629bf3533bd1d/install.php)
