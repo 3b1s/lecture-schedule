@@ -41,6 +41,22 @@
             font-size: 18px;
             margin: 20px 0;
         }
+        .day-buttons {
+            margin-top: 20px;
+        }
+        .day-buttons button {
+            margin: 5px;
+            padding: 10px 15px;
+            border: none;
+            background-color: #4A90E2;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .day-buttons button:hover {
+            background-color: #357ABD;
+        }
     </style>
 </head>
 <body>
@@ -51,21 +67,39 @@
                 <?php echo $currentDay; ?>
             </p>
         </div>
-        <div class="schedule">
-            <?php if (!empty($todaySchedule)): ?>
-                <?php foreach ($todaySchedule as $lecture): ?>
-                    <div class="lecture">
-                        <p><strong>المحاضرة:</strong> <?php echo $lecture['name']; ?></p>
-                        <p><strong>الوقت:</strong> <?php echo $lecture['time']; ?></p>
-                        <p><strong>المحاضر:</strong> <?php echo $lecture['lecturer']; ?></p>
-                    </div>
+
+        <!-- Check if it's a weekend -->
+        <?php if ($currentDay === 'الجمعة' || $currentDay === 'السبت'): ?>
+            <div class="no-lectures">
+                لا توجد محاضرات خلال عطلة نهاية الأسبوع.
+            </div>
+            <div class="day-buttons">
+                <?php foreach ($days as $day): ?>
+                    <?php if ($day !== 'الجمعة' && $day !== 'السبت'): ?>
+                        <form method="POST" action="schedule.php">
+                            <input type="hidden" name="selected_day" value="<?php echo $day; ?>">
+                            <button type="submit"><?php echo $day; ?></button>
+                        </form>
+                    <?php endif; ?>
                 <?php endforeach; ?>
-            <?php else: ?>
-                <div class="no-lectures">
-                    لا توجد محاضرات لهذا اليوم.
-                </div>
-            <?php endif; ?>
-        </div>
+            </div>
+        <?php else: ?>
+            <div class="schedule">
+                <?php if (!empty($todaySchedule)): ?>
+                    <?php foreach ($todaySchedule as $lecture): ?>
+                        <div class="lecture">
+                            <p><strong>المحاضرة:</strong> <?php echo $lecture['name']; ?></p>
+                            <p><strong>الوقت:</strong> <?php echo $lecture['time']; ?></p>
+                            <p><strong>المحاضر:</strong> <?php echo $lecture['lecturer']; ?></p>
+                        </div>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <div class="no-lectures">
+                        لا توجد محاضرات لهذا اليوم.
+                    </div>
+                <?php endif; ?>
+            </div>
+        <?php endif; ?>
     </div>
 </body>
 </html>
