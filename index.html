@@ -11,7 +11,12 @@ $schedule = [
         ['time' => '11:00-11:45', 'name' => 'الأنظمة السياسية والدستورية المقارنة', 'lecturer' => 'أ.د. محمد شطب'],
         ['time' => '12:00-12:45', 'name' => 'المدخل لدراسة القانون', 'lecturer' => 'أ.م. رياض ناظم'],
     ],
-    // Add other days as needed
+    'الاثنين' => [], // Example for an empty day
+    'الثلاثاء' => [],
+    'الأربعاء' => [],
+    'الخميس' => [],
+    'الجمعة' => [],
+    'السبت' => [],
 ];
 
 // Arabic days of the week
@@ -21,90 +26,71 @@ $days = ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء',
 $currentDayIndex = date('w'); // 0 (Sunday) to 6 (Saturday)
 $currentDay = $days[$currentDayIndex];
 
-// Debugging: Display schedule and current day
-echo '<pre>';
-echo "Current Day: $currentDay\n";
-print_r($schedule);
-echo '</pre>';
+// Start HTML Output
 ?>
 <!DOCTYPE html>
-<html dir="rtl" lang="ar">
+<html lang="ar">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>جدول المحاضرات - علوم سياسية</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <title>جدول المحاضرات علوم سياسية</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap');
-        * { font-family: 'Tajawal', sans-serif; }
-        .lecture-card { transition: all 0.3s ease; }
-        .lecture-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        body {
+            font-family: Arial, sans-serif;
+            direction: rtl;
+            text-align: center;
+            background-color: #f9f9f9;
+        }
+        .container {
+            margin: 50px auto;
+            padding: 20px;
+            width: 90%;
+            max-width: 600px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            background-color: #4A90E2;
+            color: white;
+            padding: 10px;
+            border-radius: 8px 8px 0 0;
+        }
+        .schedule {
+            margin-top: 20px;
+        }
+        .lecture {
+            background-color: #f1f1f1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .no-lectures {
+            color: #999;
+            font-size: 18px;
+            margin: 20px 0;
         }
     </style>
 </head>
-<body class="bg-gradient-to-br from-blue-50 to-indigo-50 min-h-screen p-4 md:p-8">
-    <div class="max-w-6xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
-        <!-- Header -->
-        <div class="bg-gradient-to-r from-blue-600 to-indigo-600 p-6 text-white">
-            <div class="text-center">
-                <h1 class="text-3xl font-bold mb-2">
-                    <i class="fas fa-graduation-cap ml-2"></i>
-                    جدول المحاضرات علوم سياسية
-                </h1>
-                <div class="flex items-center justify-center gap-4 text-lg">
-                    <div>
-                        <i class="fas fa-calendar-alt ml-2"></i>
-                        <span><?= $currentDay ?></span>
-                    </div>
-                    <div>
-                        <i class="fas fa-clock ml-2"></i>
-                        <span><?= date('H:i:s') ?></span>
-                    </div>
-                </div>
-            </div>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>📚 جدول المحاضرات علوم سياسية</h2>
+            <p>اليوم: <?php echo $currentDay; ?></p>
         </div>
-
-        <!-- Days Tabs -->
-        <div class="bg-gray-100 p-4">
-            <div class="flex flex-wrap gap-2 justify-center">
-                <?php foreach ($days as $day): ?>
-                    <button class="px-4 py-2 rounded-lg font-bold transition-all <?= $day === $currentDay ? 'bg-blue-600 text-white' : 'bg-white text-gray-600 hover:bg-blue-50' ?>">
-                        <?= $day ?>
-                    </button>
-                <?php endforeach; ?>
-            </div>
-        </div>
-
-        <!-- Content -->
-        <div class="p-6">
-            <?php if (isset($schedule[$currentDay])): ?>
+        <div class="schedule">
+            <?php if (!empty($schedule[$currentDay])): ?>
                 <?php foreach ($schedule[$currentDay] as $lecture): ?>
-                    <div class="lecture-card bg-white rounded-lg p-4 mb-4 border border-gray-200 hover:border-blue-300">
-                        <div class="flex justify-between items-center mb-3">
-                            <div class="flex items-center gap-3">
-                                <i class="fas fa-book text-blue-500"></i>
-                                <h3 class="font-bold text-gray-800"><?= $lecture['name'] ?></h3>
-                            </div>
-                            <span class="px-3 py-1 rounded-full text-sm bg-gray-100 text-gray-800">قادمة</span>
-                        </div>
-                        <div class="grid grid-cols-2 gap-4 mb-3 text-sm text-gray-600">
-                            <div class="flex items-center gap-2">
-                                <i class="fas fa-clock text-blue-400"></i>
-                                <?= $lecture['time'] ?>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <i class="fas fa-user text-blue-400"></i>
-                                <?= $lecture['lecturer'] ?>
-                            </div>
-                        </div>
+                    <div class="lecture">
+                        <p><strong>المحاضرة:</strong> <?php echo $lecture['name']; ?></p>
+                        <p><strong>الوقت:</strong> <?php echo $lecture['time']; ?></p>
+                        <p><strong>المحاضر:</strong> <?php echo $lecture['lecturer']; ?></p>
                     </div>
                 <?php endforeach; ?>
             <?php else: ?>
-                <div class="text-center py-12">
-                    <h2 class="text-4xl font-bold text-gray-800 mb-4">لا توجد محاضرات لهذا اليوم.</h2>
+                <div class="no-lectures">
+                    لا توجد محاضرات لهذا اليوم.
                 </div>
             <?php endif; ?>
         </div>
