@@ -1,153 +1,80 @@
 <!DOCTYPE html>
-<html dir="rtl" lang="ar">
+<html lang="ar">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>جدول المحاضرات - علوم سياسية</title>
+    <title>جدول المحاضرات</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: linear-gradient(to bottom right, #ebf8ff, #bee3f8);
-            min-height: 100vh;
-            padding: 20px;
+            direction: rtl;
+            text-align: right;
         }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
+        table {
+            width: 100%;
+            border-collapse: collapse;
         }
-        .header {
-            background: linear-gradient(to right, #4299e1, #3182ce);
-            color: white;
-            padding: 20px;
+        th, td {
+            border: 1px solid #000;
+            padding: 8px;
             text-align: center;
         }
-        .tabs {
-            background: #f7fafc;
-            padding: 10px;
-            display: flex;
-            justify-content: center;
-            gap: 10px;
+        th {
+            background-color: #f2f2f2;
         }
-        .tabs button {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        .tabs button.active {
-            background: #4299e1;
-            color: white;
-        }
-        .tabs button:hover:not(.active) {
-            background: #e2e8f0;
-        }
-        .content {
-            padding: 20px;
-        }
-        .lecture-card {
-            background: white;
-            padding: 15px;
-            margin-bottom: 15px;
-            border-radius: 4px;
-            border: 1px solid #e2e8f0;
-            transition: box-shadow 0.3s;
-        }
-        .lecture-card:hover {
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        .lecture-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-            font-weight: bold;
-        }
-        .lecture-details {
-            display: flex;
-            justify-content: space-between;
-            font-size: 14px;
-            color: #4a5568;
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>جدول المحاضرات - علوم سياسية</h1>
-        </div>
-        <div class="tabs" id="days-tabs">
-            <!-- Days tabs will be dynamically added here -->
-        </div>
-        <div class="content" id="schedule-content">
-            <!-- Schedule content will be dynamically added here -->
-        </div>
+    <div class="header">
+        <h1>جامعة تكريت</h1>
+        <h2>كلية علوم الحاسوب والرياضيات</h2>
+        <h3>قسم علم الحاسوب</h3>
+        <h4>جدول المحاضرات</h4>
+        <p>العام: 2025-2024</p>
+        <p>الفصل الدراسي: الأول</p>
+        <p>المرحلة: الثالثة</p>
+        <p>الدراسة: الصباحية</p>
     </div>
-    <script>
-        const schedule = {
-            'الأحد': [
-                { time: '9:00-11:00', name: 'برمجة مواقع 2 - مختبر أ', lecturer: 'م. شعيب أحمد، م. عمار فاروق عباس', location: 'مختبر 1' },
-                { time: '9:00-11:00', name: 'برمجة مواقع 2 - مختبر ب', lecturer: 'م. شعيب أحمد، م. عمار فاروق عباس', location: 'مختبر 2' },
-                { time: '11:00-1:00', name: 'ترجمة هندسية', lecturer: 'م. مهند داود سلمان، م. لؤي إبراهيم خلف عبد الله', location: 'قاعة 2' },
-                { time: '1:00-3:00', name: 'هندسة البرمجيات', lecturer: 'م. مروج أديب محمد يحيى، م. هبة فاني', location: 'قاعة 2' }
-            ],
-            'الاثنين': [
-                { time: '8:30-10:30', name: 'تشفير', lecturer: 'د. خالد خليل إبراهيم عزت، م. حام نعمة حسين درويش', location: 'قاعة 2' },
-                { time: '10:30-12:30', name: 'هندسة البرمجيات', lecturer: 'م. مروج أديب محمد يحيى، م. هبة فاني', location: 'قاعة 2' },
-                { time: '10:30-12:30', name: 'برمجة مواقع 2 - مختبر أ', lecturer: 'م. شعيب أحمد، م. عمار فاروق عباس', location: 'مختبر 1' },
-                { time: '10:30-12:30', name: 'برمجة مواقع 2 - مختبر ب', lecturer: 'م. شعيب أحمد، م. عمار فاروق عباس', location: 'مختبر 2' },
-                { time: '12:30-2:30', name: 'مبادئ الإدارة', lecturer: 'د. ماجد وهاب، م. محمود حسين علوان', location: 'قاعة 2' }
-            ],
-            'الثلاثاء': [
-                { time: '8:30-10:30', name: 'تشفير', lecturer: 'د. خالد خليل إبراهيم عزت، م. حام نعمة حسين درويش', location: 'قاعة 2' },
-                { time: '10:30-12:30', name: 'هندسة البرمجيات', lecturer: 'م. مروج أديب محمد يحيى، م. هبة فاني', location: 'قاعة 2' },
-                { time: '10:30-12:30', name: 'برمجة مواقع 2 - مختبر أ', lecturer: 'م. شعيب أحمد، م. عمار فاروق عباس', location: 'مختبر 1' },
-                { time: '10:30-12:30', name: 'برمجة مواقع 2 - مختبر ب', lecturer: 'م. شعيب أحمد، م. عمار فاروق عباس', location: 'مختبر 2' }
-            ],
-            'الأربعاء': [
-                { time: '8:30-10:30', name: 'ترجمة', lecturer: 'م. مهند داود سلمان، م. لؤي إبراهيم خلف عبد الله', location: 'قاعة 2' },
-                { time: '8:30-10:30', name: 'مبادئ قواعد البيانات 1 - مختبر أ', lecturer: 'م. مصطفى عبد الفتاح، م. حبيب رجب', location: 'مختبر 1' },
-                { time: '8:30-10:30', name: 'مبادئ قواعد البيانات 1 - مختبر ب', lecturer: 'م. مصطفى عبد الفتاح، م. حبيب رجب', location: 'مختبر 2' },
-                { time: '10:30-12:30', name: 'مبادئ قواعد البيانات 1 - مختبر أ', lecturer: 'م. مصطفى عبد الفتاح، م. حبيب رجب', location: 'مختبر 1' },
-                { time: '10:30-12:30', name: 'مبادئ قواعد البيانات 1 - مختبر ب', lecturer: 'م. مصطفى عبد الفتاح، م. حبيب رجب', location: 'مختبر 2' }
-            ],
-            'الخميس': [
-                { time: '8:30-10:30', name: 'مبادئ قواعد البيانات 1 - مختبر أ', lecturer: 'م. مصطفى عبد الفتاح، م. حبيب رجب', location: 'مختبر 1' },
-                { time: '8:30-10:30', name: 'مبادئ قواعد البيانات 1 - مختبر ب', lecturer: 'م. مصطفى عبد الفتاح، م. حبيب رجب', location: 'مختبر 2' }
-            ]
-        };
+    <table>
+        <thead>
+            <tr>
+                <th>اليوم</th>
+                <th>الوقت</th>
+                <th>المادة</th>
+                <th>القاعه / المختبر</th>
+                <th>رقم</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            $schedule = [
+                ["الأحد", "9:00-11:00", "برمجة المواقع الإلكترونية 2 - م.م. عمار فاروق عباس", "مختبر 1", "A"],
+                ["الأحد", "11:00-1:00", "مترجمات - م. مهند داود سلمان - م.م. كوثر إبراهيم خلف عبد الله", "مختبر 2", "B"],
+                ["الأحد", "1:00-3:00", "هندسة برمجيات - أ.م. مروى أدب محمد يحيى - م.م. هبة هاني", "قاعة 2", ""],
+                ["الإثنين", "8:30-10:30", "تشغيل - د. خالد خالص إبراهيم عزت - م.م. هبة نعمة حسين درويش", "قاعة 2", ""],
+                ["الإثنين", "10:30-12:30", "هندسة برمجيات - أ.م. مروى أدب محمد يحيى - م.م. هبة هاني", "مختبر 1", "A"],
+                ["الإثنين", "10:30-12:30", "برمجة المواقع الإلكترونية 2 - م.م. عمار فاروق عباس", "مختبر 2", "B"],
+                ["الإثنين", "12:30-2:30", "مبادئ إدارة - م.م. علي مجيد وهاب - م.م. محمود حسين علوان", "قاعة 2", ""],
+                ["الثلاثاء", "8:30-10:30", "تشغيل - د. خالد خالص إبراهيم عزت - م.م. هبة نعمة حسين درويش", "مختبر 1", "A"],
+                ["الثلاثاء", "10:30-12:30", "هندسة برمجيات - أ.م. مروى أدب محمد يحيى - م.م. هبة هاني", "مختبر 2", "B"],
+                ["الثلاثاء", "12:30-2:30", "برمجة المواقع الإلكترونية 2 - م.م. عمار فاروق عباس", "قاعة 2", ""],
+                ["الأربعاء", "8:30-10:30", "مترجمات - م. مهند داود سلمان - م.م. كوثر إبراهيم خلف عبد الله", "مختبر 1", "A"],
+                ["الأربعاء", "10:30-12:30", "هندسة برمجيات - أ.م. مروى أدب محمد يحيى - م.م. هبة هاني", "مختبر 2", "B"]
+            ];
 
-        const days = Object.keys(schedule);
-        let activeDay = days[0];
-
-        function updateSchedule() {
-            const container = document.getElementById('schedule-content');
-            container.innerHTML = '';
-
-            if (schedule[activeDay]) {
-                schedule[activeDay].forEach(lecture => {
-                    const lectureCard = document.createElement('div');
-                    lectureCard.className = 'lecture-card';
-                    lectureCard.innerHTML = `
-                        <div class="lecture-header">
-                            <div>${lecture.name}</div>
-                            <div>${lecture.time}</div>
-                        </div>
-                        <div class="lecture-details">
-                            <div>المحاضر: ${lecture.lecturer}</div>
-                            <div>الموقع: ${lecture.location}</div>
-                        </div>
-                    `;
-                    container.appendChild(lectureCard);
-                });
+            foreach ($schedule as $class) {
+                echo "<tr>";
+                foreach ($class as $detail) {
+                    echo "<td>$detail</td>";
+                }
+                echo "</tr>";
             }
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            const tabsContainer = document.getElementById('days-tabs');
-            days.forEach(day => {
-                const button = document.createElement('button');
-                button.class[_{{{CITATION{{{_1{](https://github.com/Ab-0/List-Banned-Members/tree/b8d0e78891edc5488dfecdb19e4629bf3533bd1d/install.php)
+            ?>
+        </tbody>
+    </table>
+</body>
+</html>
