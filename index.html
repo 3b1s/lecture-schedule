@@ -33,6 +33,14 @@
             font-size: 24px;
         }
 
+        .header .info {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            font-size: 18px;
+            margin-top: 10px;
+        }
+
         .tabs {
             background: #f7fafc;
             padding: 10px;
@@ -88,59 +96,90 @@
             font-size: 14px;
             color: #4a5568;
         }
+
+        .progress-bar {
+            background: #edf2f7;
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+            height: 6px;
+            margin-top: 10px;
+        }
+
+        .progress-bar .fill {
+            background: #4299e1;
+            width: 0;
+            height: 100%;
+            transition: width 0.3s;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
             <h1>جدول المحاضرات - علوم سياسية</h1>
+            <div class="info">
+                <div>
+                    <i class="fa fa-calendar-alt"></i>
+                    <span id="current-day"><?php echo date('l'); ?></span>
+                </div>
+                <div>
+                    <i class="fa fa-clock"></i>
+                    <span id="current-time"><?php echo date('H:i:s'); ?></span>
+                </div>
+            </div>
         </div>
 
         <div class="tabs" id="days-tabs">
-            <!-- Days tabs will be dynamically added here -->
+            <?php
+            $days = ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس'];
+            foreach ($days as $day) {
+                echo '<button class="' . ($day === 'الأحد' ? 'active' : '') . '" data-day="' . $day . '">' . $day . '</button>';
+            }
+            ?>
         </div>
 
         <div class="content" id="schedule-content">
-            <!-- Schedule content will be dynamically added here -->
+            <!-- سيتم إضافة المحتوى ديناميكياً -->
         </div>
     </div>
 
     <script>
         const schedule = {
             'الأحد': [
-                { time: '9:00-11:00', name: 'برمجة مواقع 2 - مختبر أ', lecturer: 'م. شعيب أحمد، م. عمار فاروق عباس', location: 'مختبر 1' },
-                { time: '9:00-11:00', name: 'برمجة مواقع 2 - مختبر ب', lecturer: 'م. شعيب أحمد، م. عمار فاروق عباس', location: 'مختبر 2' },
-                { time: '11:00-1:00', name: 'ترجمة هندسية', lecturer: 'م. مهند داود سلمان، م. لؤي إبراهيم خلف عبد الله', location: 'قاعة 2' },
-                { time: '1:00-3:00', name: 'هندسة البرمجيات', lecturer: 'م. مروج أديب محمد يحيى، م. هبة فاني', location: 'قاعة 2' }
+                { time: '9:00-9:45', name: 'اللغة العربية', lecturer: 'م.د. إلهام روكان عبد' },
+                { time: '10:00-10:45', name: 'تاريخ العلاقات الدولية', lecturer: 'أ.د. عبدالغني محمد عبدالعزيز' },
+                { time: '11:00-11:45', name: 'الأنظمة السياسية والدستورية المقارنة', lecturer: 'أ.د. محمد شطب' },
+                { time: '12:00-12:45', name: 'المدخل لدراسة القانون', lecturer: 'أ.م. رياض ناظم' }
             ],
             'الاثنين': [
-                { time: '8:30-10:30', name: 'تشفير', lecturer: 'د. خالد خليل إبراهيم عزت، م. حام نعمة حسين درويش', location: 'قاعة 2' },
-                { time: '10:30-12:30', name: 'هندسة البرمجيات', lecturer: 'م. مروج أديب محمد يحيى، م. هبة فاني', location: 'قاعة 2' },
-                { time: '10:30-12:30', name: 'برمجة مواقع 2 - مختبر أ', lecturer: 'م. شعيب أحمد، م. عمار فاروق عباس', location: 'مختبر 1' },
-                { time: '10:30-12:30', name: 'برمجة مواقع 2 - مختبر ب', lecturer: 'م. شعيب أحمد، م. عمار فاروق عباس', location: 'مختبر 2' },
-                { time: '12:30-2:30', name: 'مبادئ الإدارة', lecturer: 'د. ماجد وهاب، م. محمود حسين علوان', location: 'قاعة 2' }
+                { time: '9:00-9:45', name: 'Headway Beginners', lecturer: 'م.م. علي خلف عبدالله' },
+                { time: '10:00-10:45', name: 'حقوق الإنسان', lecturer: 'م.م. زينب غالب' },
+                { time: '11:00-11:45', name: 'المدخل لدراسة القانون', lecturer: 'أ.م. رياض ناظم' },
+                { time: '12:00-12:45', name: 'Introduction to Political Science', lecturer: 'م.م. ماجد أحمد' }
             ],
             'الثلاثاء': [
-                { time: '8:30-10:30', name: 'تشفير', lecturer: 'د. خالد خليل إبراهيم عزت، م. حام نعمة حسين درويش', location: 'قاعة 2' },
-                { time: '10:30-12:30', name: 'هندسة البرمجيات', lecturer: 'م. مروج أديب محمد يحيى، م. هبة فاني', location: 'قاعة 2' },
-                { time: '10:30-12:30', name: 'برمجة مواقع 2 - مختبر أ', lecturer: 'م. شعيب أحمد، م. عمار فاروق عباس', location: 'مختبر 1' },
-                { time: '10:30-12:30', name: 'برمجة مواقع 2 - مختبر ب', lecturer: 'م. شعيب أحمد، م. عمار فاروق عباس', location: 'مختبر 2' }
+                { time: '9:00-9:45', name: 'الأنظمة السياسية والدستورية المقارنة', lecturer: 'أ.د. محمد شطب' },
+                { time: '10:00-10:45', name: 'تاريخ العلاقات الدولية', lecturer: 'أ.د. عبدالغني محمد عبدالعزيز' },
+                { time: '11:00-11:45', name: 'مدخل علم الاقتصاد', lecturer: 'م. هاشم راشد عجرش' },
+                { time: '12:00-12:45', name: 'المدخل إلى علم السياسة', lecturer: 'د. عباس فاضل علوان' }
             ],
             'الأربعاء': [
-                { time: '8:30-10:30', name: 'ترجمة', lecturer: 'م. مهند داود سلمان، م. لؤي إبراهيم خلف عبد الله', location: 'قاعة 2' },
-                { time: '8:30-10:30', name: 'مبادئ قواعد البيانات 1 - مختبر أ', lecturer: 'م. مصطفى عبد الفتاح، م. حبيب رجب', location: 'مختبر 1' },
-                { time: '8:30-10:30', name: 'مبادئ قواعد البيانات 1 - مختبر ب', lecturer: 'م. مصطفى عبد الفتاح، م. حبيب رجب', location: 'مختبر 2' },
-                { time: '10:30-12:30', name: 'مبادئ قواعد البيانات 1 - مختبر أ', lecturer: 'م. مصطفى عبد الفتاح، م. حبيب رجب', location: 'مختبر 1' },
-                { time: '10:30-12:30', name: 'مبادئ قواعد البيانات 1 - مختبر ب', lecturer: 'م. مصطفى عبد الفتاح، م. حبيب رجب', location: 'مختبر 2' }
+                { time: '9:00-9:45', name: 'المدخل إلى علم السياسة', lecturer: 'د. عباس فاضل علوان' },
+                { time: '10:00-10:45', name: 'حقوق الإنسان', lecturer: 'م.م. زينب غالب' },
+                { time: '11:00-11:45', name: 'الأنظمة السياسية والدستورية المقارنة', lecturer: 'أ.د. محمد شطب' },
+                { time: '12:00-12:45', name: 'Introduction to Political Science', lecturer: 'م.م. ماجد أحمد' }
             ],
             'الخميس': [
-                { time: '8:30-10:30', name: 'مبادئ قواعد البيانات 1 - مختبر أ', lecturer: 'م. مصطفى عبد الفتاح، م. حبيب رجب', location: 'مختبر 1' },
-                { time: '8:30-10:30', name: 'مبادئ قواعد البيانات 1 - مختبر ب', lecturer: 'م. مصطفى عبد الفتاح، م. حبيب رجب', location: 'مختبر 2' }
+                { time: '9:00-9:45', name: 'مدخل علم الاقتصاد', lecturer: 'م. هاشم راشد عجرش' },
+                { time: '10:00-10:45', name: 'المدخل إلى علم السياسة', lecturer: 'د. عباس فاضل علوان' },
+                { time: '11:00-11:45', name: 'أساسيات الحاسوب', lecturer: 'م.م. ليث رافع' }
             ]
         };
 
-        const days = Object.keys(schedule);
+        const days = ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس'];
         let activeDay = days[0];
+        let showingSchedule = false;
 
         function updateSchedule() {
             const container = document.getElementById('schedule-content');
@@ -157,7 +196,6 @@
                         </div>
                         <div class="lecture-details">
                             <div>المحاضر: ${lecture.lecturer}</div>
-                            <div>الموقع: ${lecture.location}</div>
                         </div>
                     `;
                     container.appendChild(lectureCard);
@@ -165,4 +203,16 @@
             }
         }
 
-        document.addEventListener('DOMContentLoaded[_{{{CITATION{{{_1{](https://github.com/Ab-0/List-Banned-Members/tree/b8d0e78891edc5488dfecdb19e4629bf3533bd1d/install.php)
+        document.querySelectorAll('.tabs button').forEach(button => {
+            button.addEventListener('click', function() {
+                document.querySelectorAll('.tabs button').forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                activeDay = this.getAttribute('data-day');
+                updateSchedule();
+            });
+        });
+
+        updateSchedule();
+    </script>
+</body>
+</html>
