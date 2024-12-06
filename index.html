@@ -1,136 +1,100 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html dir="rtl" lang="ar">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>جدول المحاضرات</title>
+    <title>جدول المحاضرات - علوم سياسية</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            direction: rtl;
-            text-align: right;
-            background: linear-gradient(to bottom right, #ebf8ff, #bee3f8);
-            min-height: 100vh;
-            padding: 20px;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            padding: 20px;
-        }
-        .header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            border: 1px solid #000;
-            padding: 8px;
-            text-align: center;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-        .weekend {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 24px;
-            color: red;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap');
+        * { font-family: 'Tajawal', sans-serif; }
+        .lecture-card { transition: all 0.3s ease; }
+        .lecture-card:hover { transform: translateY(-2px); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); }
+        .progress-bar { transition: width 0.3s ease; }
+        @keyframes steam { 0% { transform: translateY(0) scale(1); opacity: 0.8; } 50% { transform: translateY(-10px) scale(1.2); opacity: 0.4; } 100% { transform: translateY(-20px) scale(1.4); opacity: 0; } }
+        .steam { animation: steam 2s infinite; }
     </style>
 </head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>جامعة تكريت</h1>
-            <h2>كلية علوم الحاسوب والرياضيات</h2>
-            <h3>قسم علم الحاسوب</h3>
-            <h4>جدول المحاضرات</h4>
-            <p>العام: 2025-2024</p>
-            <p>الفصل الدراسي: الأول</p>
-            <p>المرحلة: الثالثة</p>
-            <p>الدراسة: الصباحية</p>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-50 min-h-screen p-4 md:p-8">
+    <div class="max-w-6xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
+        <!-- Header -->
+        <div class="bg-gradient-to-r from-blue-600 to-indigo-600 p-6 text-white">
+            <div class="text-center">
+                <h1 class="text-3xl font-bold mb-2">
+                    <i class="fas fa-graduation-cap ml-2"></i>
+                    جدول المحاضرات علوم سياسية
+                </h1>
+                <div class="flex items-center justify-center gap-4 text-lg">
+                    <div>
+                        <i class="fas fa-calendar-alt ml-2"></i>
+                        <span><?= date('l', time()); ?></span>
+                    </div>
+                    <div>
+                        <i class="fas fa-clock ml-2"></i>
+                        <span><?= date('h:i A', time()); ?></span>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <?php
-        $daysOfWeek = [
-            'Sunday' => 'الأحد',
-            'Monday' => 'الإثنين',
-            'Tuesday' => 'الثلاثاء',
-            'Wednesday' => 'الأربعاء',
-            'Thursday' => 'الخميس',
-            'Friday' => 'الجمعة',
-            'Saturday' => 'السبت'
-        ];
+        <!-- Days Tabs -->
+        <div class="bg-gray-100 p-4">
+            <div class="flex flex-wrap gap-2 justify-center">
+                <?php
+                $days = ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس'];
+                $currentDay = date('N', time()) - 1;
+                foreach ($days as $key => $day) {
+                    $activeClass = ($key == $currentDay) ? 'bg-blue-600 text-white' : 'bg-white text-gray-600 hover:bg-blue-50';
+                    echo "<button class='px-4 py-2 rounded-lg font-bold transition-all $activeClass'>$day</button>";
+                }
+                ?>
+            </div>
+        </div>
 
-        $today = date('l'); // Get the current day in English
-        $arabicDay = $daysOfWeek[$today]; // Translate the current day to Arabic
+        <!-- Content -->
+        <div class="p-6">
+            <?php
+            $schedule = [
+                'الأحد' => [
+                    ['time' => '9:00-9:45', 'name' => 'اللغة العربية', 'lecturer' => 'م.د. إلهام روكان عبد'],
+                    ['time' => '10:00-10:45', 'name' => 'تاريخ العلاقات الدولية', 'lecturer' => 'أ.د. عبدالغني محمد عبدالعزيز'],
+                ],
+                // Add other days' schedules here
+            ];
 
-        $schedule = [
-            "الأحد" => [
-                ["9:00-11:00", "برمجة المواقع الإلكترونية 2 - م.م. عمار فاروق عباس", "مختبر 1", "A"],
-                ["11:00-1:00", "مترجمات - م. مهند داود سلمان - م.م. كوثر إبراهيم خلف عبد الله", "مختبر 2", "B"],
-                ["1:00-3:00", "هندسة برمجيات - أ.م. مروى أدب محمد يحيى - م.م. هبة هاني", "قاعة 2", ""]
-            ],
-            "الإثنين" => [
-                ["8:30-10:30", "تشغيل - د. خالد خالص إبراهيم عزت - م.م. هبة نعمة حسين درويش", "قاعة 2", ""],
-                ["10:30-12:30", "هندسة برمجيات - أ.م. مروى أدب محمد يحيى - م.م. هبة هاني", "مختبر 1", "A"],
-                ["10:30-12:30", "برمجة المواقع الإلكترونية 2 - م.م. عمار فاروق عباس", "مختبر 2", "B"],
-                ["12:30-2:30", "مبادئ إدارة - م.م. علي مجيد وهاب - م.م. محمود حسين علوان", "قاعة 2", ""]
-            ],
-            "الثلاثاء" => [
-                ["8:30-10:30", "تشغيل - د. خالد خالص إبراهيم عزت - م.م. هبة نعمة حسين درويش", "مختبر 1", "A"],
-                ["10:30-12:30", "هندسة برمجيات - أ.م. مروى أدب محمد يحيى - م.م. هبة هاني", "مختبر 2", "B"],
-                ["12:30-2:30", "برمجة المواقع الإلكترونية 2 - م.م. عمار فاروق عباس", "قاعة 2", ""]
-            ],
-            "الأربعاء" => [
-                ["8:30-10:30", "مترجمات - م. مهند داود سلمان - م.م. كوثر إبراهيم خلف عبد الله", "مختبر 1", "A"],
-                ["10:30-12:30", "هندسة برمجيات - أ.م. مروى أدب محمد يحيى - م.م. هبة هاني", "مختبر 2", "B"]
-            ],
-            "الخميس" => [
-                ["8:30-10:30", "مبادئ قواعد البيانات 1 - مختبر أ", "م. مصطفى عبد الفتاح، م. حبيب رجب", "مختبر 1"],
-                ["8:30-10:30", "مبادئ قواعد البيانات 1 - مختبر ب", "م. مصطفى عبد الفتاح، م. حبيب رجب", "مختبر 2"]
-            ]
-        ];
-
-        $weekendDays = ["Friday", "Saturday"];
-        
-        if (in_array($today, $weekendDays)) {
-            echo "<p class='weekend'>اليوم عطلة! استمتع بوقتك!</p>";
-        } else {
-            echo "<h2>جدول محاضرات اليوم: $arabicDay</h2>";
-            echo "<table>
-                    <thead>
-                        <tr>
-                            <th>الوقت</th>
-                            <th>المادة</th>
-                            <th>المكان</th>
-                            <th>رقم</th>
-                        </tr>
-                    </thead>
-                    <tbody>";
-            if (isset($schedule[$arabicDay])) {
-                foreach ($schedule[$arabicDay] as $class) {
-                    echo "<tr>";
-                    foreach ($class as $detail) {
-                        echo "<td>$detail</td>";
-                    }
-                    echo "</tr>";
+            $dayName = $days[$currentDay];
+            if (isset($schedule[$dayName])) {
+                foreach ($schedule[$dayName] as $lecture) {
+                    echo "
+                    <div class='lecture-card bg-white rounded-lg p-4 mb-4 border border-gray-200 hover:border-blue-300'>
+                        <div class='flex justify-between items-center mb-3'>
+                            <div class='flex items-center gap-3'>
+                                <i class='fas fa-book text-blue-500'></i>
+                                <h3 class='font-bold text-gray-800'>{$lecture['name']}</h3>
+                            </div>
+                            <span class='px-3 py-1 rounded-full text-sm bg-gray-100 text-gray-800'>قادمة</span>
+                        </div>
+                        <div class='grid grid-cols-2 gap-4 mb-3 text-sm text-gray-600'>
+                            <div class='flex items-center gap-2'>
+                                <i class='fas fa-clock text-blue-400'></i>
+                                {$lecture['time']}
+                            </div>
+                            <div class='flex items-center gap-2'>
+                                <i class='fas fa-user text-blue-400'></i>
+                                {$lecture['lecturer']}
+                            </div>
+                        </div>
+                        <div class='relative h-2 bg-gray-100 rounded-full overflow-hidden'>
+                            <div class='progress-bar absolute top-0 left-0 h-full bg-blue-500' style='width: 0%;'></div>
+                        </div>
+                    </div>";
                 }
             } else {
-                echo "<tr><td colspan='4'>لا توجد محاضرات اليوم.</td></tr>";
+                echo "<div class='text-center py-12'>عطلة سعيدة! 🎉</div>";
             }
-            echo "  </tbody>
-                </table>";
-        }
-        ?>
+            ?>
+        </div>
     </div>
 </body>
 </html>
