@@ -4,165 +4,150 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>جدول المحاضرات - علوم سياسية</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap');
-        
-        * {
-            font-family: 'Tajawal', sans-serif;
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom right, #ebf8ff, #bee3f8);
+            min-height: 100vh;
+            padding: 20px;
         }
-        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(to right, #4299e1, #3182ce);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .tabs {
+            background: #f7fafc;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        .tabs button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .tabs button.active {
+            background: #4299e1;
+            color: white;
+        }
+        .tabs button:hover:not(.active) {
+            background: #e2e8f0;
+        }
+        .content {
+            padding: 20px;
+        }
         .lecture-card {
-            transition: all 0.3s ease;
+            background: white;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+            border: 1px solid #e2e8f0;
+            transition: box-shadow 0.3s;
         }
-        
         .lecture-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-        
-        .progress-bar {
-            transition: width 0.3s ease;
+        .lecture-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-weight: bold;
         }
-
-        @keyframes steam {
-            0% { transform: translateY(0) scale(1); opacity: 0.8; }
-            50% { transform: translateY(-10px) scale(1.2); opacity: 0.4; }
-            100% { transform: translateY(-20px) scale(1.4); opacity: 0; }
-        }
-
-        .steam {
-            animation: steam 2s infinite;
+        .lecture-details {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            color: #4a5568;
         }
     </style>
 </head>
-<body class="bg-gradient-to-br from-blue-50 to-indigo-50 min-h-screen p-4 md:p-8">
-    <div class="max-w-6xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
-        <!-- Header -->
-        <div class="bg-gradient-to-r from-blue-600 to-indigo-600 p-6 text-white">
-            <div class="text-center">
-                <h1 class="text-3xl font-bold mb-2">
-                    <i class="fas fa-graduation-cap ml-2"></i>
-                    جدول المحاضرات علوم سياسية
-                </h1>
-                <div class="flex items-center justify-center gap-4 text-lg">
-                    <div>
-                        <i class="fas fa-calendar-alt ml-2"></i>
-                        <span id="current-day"><?php echo date('l'); ?></span>
-                    </div>
-                    <div>
-                        <i class="fas fa-clock ml-2"></i>
-                        <span id="current-time"><?php echo date('H:i:s'); ?></span>
-                    </div>
-                </div>
-            </div>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>جدول المحاضرات - علوم سياسية</h1>
         </div>
-
-        <!-- Days Tabs -->
-        <div class="bg-gray-100 p-4">
-            <div class="flex flex-wrap gap-2 justify-center" id="days-tabs">
-                <?php
-                $days = ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس'];
-                foreach ($days as $day) {
-                    echo '<button class="px-4 py-2 rounded-lg font-bold transition-all ' . ($day === 'الأحد' ? 'bg-blue-600 text-white' : 'bg-white text-gray-600 hover:bg-blue-50') . '">' . $day . '</button>';
-                }
-                ?>
-            </div>
+        <div class="tabs" id="days-tabs">
+            <!-- Days tabs will be dynamically added here -->
         </div>
-
-        <!-- Content -->
-        <div class="p-6" id="schedule-content">
-            <!-- سيتم إضافة المحتوى ديناميكياً -->
+        <div class="content" id="schedule-content">
+            <!-- Schedule content will be dynamically added here -->
         </div>
     </div>
-
     <script>
         const schedule = {
             'الأحد': [
-                { time: '9:00-9:45', name: 'اللغة العربية', lecturer: 'م.د. إلهام روكان عبد' },
-                { time: '10:00-10:45', name: 'تاريخ العلاقات الدولية', lecturer: 'أ.د. عبدالغني محمد عبدالعزيز' },
-                { time: '11:00-11:45', name: 'الأنظمة السياسية والدستورية المقارنة', lecturer: 'أ.د. محمد شطب' },
-                { time: '12:00-12:45', name: 'المدخل لدراسة القانون', lecturer: 'أ.م. رياض ناظم' }
+                { time: '9:00-11:00', name: 'برمجة مواقع 2 - مختبر أ', lecturer: 'م. شعيب أحمد، م. عمار فاروق عباس', location: 'مختبر 1' },
+                { time: '9:00-11:00', name: 'برمجة مواقع 2 - مختبر ب', lecturer: 'م. شعيب أحمد، م. عمار فاروق عباس', location: 'مختبر 2' },
+                { time: '11:00-1:00', name: 'ترجمة هندسية', lecturer: 'م. مهند داود سلمان، م. لؤي إبراهيم خلف عبد الله', location: 'قاعة 2' },
+                { time: '1:00-3:00', name: 'هندسة البرمجيات', lecturer: 'م. مروج أديب محمد يحيى، م. هبة فاني', location: 'قاعة 2' }
             ],
             'الاثنين': [
-                { time: '9:00-9:45', name: 'Headway Beginners', lecturer: 'م.م. علي خلف عبدالله' },
-                { time: '10:00-10:45', name: 'حقوق الإنسان', lecturer: 'م.م. زينب غالب' },
-                { time: '11:00-11:45', name: 'المدخل لدراسة القانون', lecturer: 'أ.م. رياض ناظم' },
-                { time: '12:00-12:45', name: 'Introduction to Political Science', lecturer: 'م.م. ماجد أحمد' }
+                { time: '8:30-10:30', name: 'تشفير', lecturer: 'د. خالد خليل إبراهيم عزت، م. حام نعمة حسين درويش', location: 'قاعة 2' },
+                { time: '10:30-12:30', name: 'هندسة البرمجيات', lecturer: 'م. مروج أديب محمد يحيى، م. هبة فاني', location: 'قاعة 2' },
+                { time: '10:30-12:30', name: 'برمجة مواقع 2 - مختبر أ', lecturer: 'م. شعيب أحمد، م. عمار فاروق عباس', location: 'مختبر 1' },
+                { time: '10:30-12:30', name: 'برمجة مواقع 2 - مختبر ب', lecturer: 'م. شعيب أحمد، م. عمار فاروق عباس', location: 'مختبر 2' },
+                { time: '12:30-2:30', name: 'مبادئ الإدارة', lecturer: 'د. ماجد وهاب، م. محمود حسين علوان', location: 'قاعة 2' }
             ],
             'الثلاثاء': [
-                { time: '9:00-9:45', name: 'الأنظمة السياسية والدستورية المقارنة', lecturer: 'أ.د. محمد شطب' },
-                { time: '10:00-10:45', name: 'تاريخ العلاقات الدولية', lecturer: 'أ.د. عبدالغني محمد عبدالعزيز' },
-                { time: '11:00-11:45', name: 'مدخل علم الاقتصاد', lecturer: 'م. هاشم راشد عجرش' },
-                { time: '12:00-12:45', name: 'المدخل إلى علم السياسة', lecturer: 'د. عباس فاضل علوان' }
+                { time: '8:30-10:30', name: 'تشفير', lecturer: 'د. خالد خليل إبراهيم عزت، م. حام نعمة حسين درويش', location: 'قاعة 2' },
+                { time: '10:30-12:30', name: 'هندسة البرمجيات', lecturer: 'م. مروج أديب محمد يحيى، م. هبة فاني', location: 'قاعة 2' },
+                { time: '10:30-12:30', name: 'برمجة مواقع 2 - مختبر أ', lecturer: 'م. شعيب أحمد، م. عمار فاروق عباس', location: 'مختبر 1' },
+                { time: '10:30-12:30', name: 'برمجة مواقع 2 - مختبر ب', lecturer: 'م. شعيب أحمد، م. عمار فاروق عباس', location: 'مختبر 2' }
             ],
             'الأربعاء': [
-                { time: '9:00-9:45', name: 'المدخل إلى علم السياسة', lecturer: 'د. عباس فاضل علوان' },
-                { time: '10:00-10:45', name: 'حقوق الإنسان', lecturer: 'م.م. زينب غالب' },
-                { time: '11:00-11:45', name: 'الأنظمة السياسية والدستورية المقارنة', lecturer: 'أ.د. محمد شطب' },
-                { time: '12:00-12:45', name: 'Introduction to Political Science', lecturer: 'م.م. ماجد أحمد' }
+                { time: '8:30-10:30', name: 'ترجمة', lecturer: 'م. مهند داود سلمان، م. لؤي إبراهيم خلف عبد الله', location: 'قاعة 2' },
+                { time: '8:30-10:30', name: 'مبادئ قواعد البيانات 1 - مختبر أ', lecturer: 'م. مصطفى عبد الفتاح، م. حبيب رجب', location: 'مختبر 1' },
+                { time: '8:30-10:30', name: 'مبادئ قواعد البيانات 1 - مختبر ب', lecturer: 'م. مصطفى عبد الفتاح، م. حبيب رجب', location: 'مختبر 2' },
+                { time: '10:30-12:30', name: 'مبادئ قواعد البيانات 1 - مختبر أ', lecturer: 'م. مصطفى عبد الفتاح، م. حبيب رجب', location: 'مختبر 1' },
+                { time: '10:30-12:30', name: 'مبادئ قواعد البيانات 1 - مختبر ب', lecturer: 'م. مصطفى عبد الفتاح، م. حبيب رجب', location: 'مختبر 2' }
             ],
             'الخميس': [
-                { time: '9:00-9:45', name: 'مدخل علم الاقتصاد', lecturer: 'م. هاشم راشد عجرش' },
-                { time: '10:00-10:45', name: 'المدخل إلى علم السياسة', lecturer: 'د. عباس فاضل علوان' },
-                { time: '11:00-11:45', name: 'أساسيات الحاسوب', lecturer: 'م.م. ليث رافع' }
+                { time: '8:30-10:30', name: 'مبادئ قواعد البيانات 1 - مختبر أ', lecturer: 'م. مصطفى عبد الفتاح، م. حبيب رجب', location: 'مختبر 1' },
+                { time: '8:30-10:30', name: 'مبادئ قواعد البيانات 1 - مختبر ب', lecturer: 'م. مصطفى عبد الفتاح، م. حبيب رجب', location: 'مختبر 2' }
             ]
         };
 
-        const days = ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس'];
-        let activeDay = getCurrentDay();
-        let showingSchedule = false;
+        const days = Object.keys(schedule);
+        let activeDay = days[0];
 
-        function getCurrentDay() {
-            const daysAr = ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
-            return daysAr[new Date().getDay()];
-        }
+        function updateSchedule() {
+            const container = document.getElementById('schedule-content');
+            container.innerHTML = '';
 
-        function isWeekend() {
-            const day = new Date().getDay();
-            return day === 5 || day === 6; // 5 is Friday, 6 is Saturday
-        }
-
-        function parseTime(timeStr) {
-            const [hours, minutes] = timeStr.split(':').map(Number);
-            const date = new Date();
-            date.setHours(hours, minutes, 0);
-            return date;
-        }
-
-        function getLectureStatus(day, timeRange) {
-            const currentDay = getCurrentDay();
-            const [startTime, endTime] = timeRange.split('-');
-            const lectureStart = parseTime(startTime);
-            const lectureEnd = parseTime(endTime);
-            const now = new Date();
-
-            if (day !== currentDay) {
-                return {
-                    status: 'لم يبدء',
-                    progress: 0,
-                    remaining: '---',
-                    color: 'bg-gray-200'
-                };
+            if (schedule[activeDay]) {
+                schedule[activeDay].forEach(lecture => {
+                    const lectureCard = document.createElement('div');
+                    lectureCard.className = 'lecture-card';
+                    lectureCard.innerHTML = `
+                        <div class="lecture-header">
+                            <div>${lecture.name}</div>
+                            <div>${lecture.time}</div>
+                        </div>
+                        <div class="lecture-details">
+                            <div>المحاضر: ${lecture.lecturer}</div>
+                            <div>الموقع: ${lecture.location}</div>
+                        </div>
+                    `;
+                    container.appendChild(lectureCard);
+                });
             }
+        }
 
-            if (now >= lectureStart && now <= lectureEnd) {
-                const totalDuration = lectureEnd - lectureStart;
-                const elapsed = now - lectureStart;
-                const progress = Math.min(100, (elapsed / totalDuration) * 100);
-                const remainingMinutes = Math.floor((lectureEnd - now) / 1000 / 60);
-                const remainingHours = Math.floor(remainingMinutes / 60);
-                const mins = remainingMinutes % 60;
-                
-                return {
-                    status: 'جارية الآن',
-                    progress,
-                    remaining: `${remainingHours ? remainingHours + ' ساعة و ' : ''}${mins} دقيقة`,
-                    color: 'bg-green-500'
-                };
-            }
-
-            if (now < lectureStart) {
-                const remainingMinutes = Math.floor((lectureStart - now) / 1000 / 60);
-                const remainingHours = Math.floor[_{{{CITATION{{{_1{](https://github.com/Ab-0/List-Banned-Members/tree/b8d0e78891edc5488dfecdb19e4629bf3533bd1d/install.php)
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabsContainer = document.getElementById('days-tabs');
+            days.forEach(day => {
+                const button = document.createElement('button');
+                button.class[_{{{CITATION{{{_1{](https://github.com/Ab-0/List-Banned-Members/tree/b8d0e78891edc5488dfecdb19e4629bf3533bd1d/install.php)
