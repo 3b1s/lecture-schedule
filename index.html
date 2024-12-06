@@ -5,72 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>جدول المحاضرات علوم سياسية</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            direction: rtl;
-            text-align: center;
-            background-color: #f9f9f9;
-        }
-        .container {
-            margin: 50px auto;
-            padding: 20px;
-            width: 90%;
-            max-width: 600px;
-            background-color: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        .header {
-            background-color: #4A90E2;
-            color: white;
-            padding: 10px;
-            border-radius: 8px 8px 0 0;
-        }
-        .schedule {
-            margin-top: 20px;
-        }
-        .lecture {
-            background-color: #f1f1f1;
-            padding: 10px;
-            border: 1px solid #ccc;
-            margin: 10px 0;
-            border-radius: 5px;
-        }
-        .no-lectures {
-            color: #999;
-            font-size: 18px;
-            margin: 20px 0;
-        }
-        .day-buttons {
-            margin-top: 20px;
-        }
-        .day-buttons button {
-            margin: 5px;
-            padding: 10px 15px;
-            border: none;
-            background-color: #4A90E2;
-            color: white;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        .day-buttons button:hover {
-            background-color: #357ABD;
-        }
+        /* Custom styling for the page */
+        .container { width: 80%; margin: 0 auto; }
+        .header { background-color: #4CAF50; color: white; padding: 10px; text-align: center; }
+        .day-buttons button { margin: 5px; padding: 10px; background-color: #4CAF50; color: white; border: none; cursor: pointer; }
+        .day-buttons button:hover { background-color: #45a049; }
+        .schedule { padding: 20px; background-color: #f4f4f4; }
+        .no-lectures { color: red; font-weight: bold; }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
             <h2>📚 جدول المحاضرات علوم سياسية</h2>
-            <p>اليوم: 
-                <?php echo $currentDay; ?>
-            </p>
+            <p>اليوم: <?php echo $currentDay; ?></p>
         </div>
 
-        <!-- Display day buttons every day -->
+        <!-- Display buttons for each day -->
         <div class="day-buttons">
-            <?php foreach ($days as $day); ?>
+            <?php foreach ($days as $day): ?>
                 <form method="POST" action="schedule.php">
                     <input type="hidden" name="selected_day" value="<?php echo $day; ?>">
                     <button type="submit"><?php echo $day; ?></button>
@@ -78,13 +31,13 @@
             <?php endforeach; ?>
         </div>
 
-        <!-- Weekend message -->
+        <!-- Weekend condition -->
         <?php if ($currentDay === 'الجمعة' || $currentDay === 'السبت'): ?>
             <div class="no-lectures">
                 لا توجد محاضرات خلال عطلة نهاية الأسبوع.
             </div>
         <?php else: ?>
-            <!-- Display schedule on workdays -->
+            <!-- Display the schedule for weekdays -->
             <div class="schedule">
                 <?php if (!empty($todaySchedule)): ?>
                     <?php foreach ($todaySchedule as $lecture): ?>
