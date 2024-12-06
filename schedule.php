@@ -22,9 +22,14 @@ $schedule = [
 // Arabic days of the week
 $days = ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
 
-// Get current day index
-$currentDayIndex = date('w'); // 0 (Sunday) to 6 (Saturday)
-$currentDay = $days[$currentDayIndex];
+// Determine the selected day or current day
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['selected_day'])) {
+    $selectedDay = $_POST['selected_day'];
+} else {
+    $currentDayIndex = date('w'); // 0 (Sunday) to 6 (Saturday)
+    $selectedDay = $days[$currentDayIndex];
+}
 
-// Get today's schedule
-$todaySchedule = $schedule[$currentDay] ?? [];
+// Get the selected day's schedule
+$todaySchedule = $schedule[$selectedDay] ?? [];
+$currentDay = $selectedDay;
